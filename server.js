@@ -14,8 +14,18 @@ app.use(express.static('public'))
 app.use(bodyParser.json())
 
 // Routes
+
+// Get
 app.get('/todos', function (req, res) {
-    knex.select().from('todos').table('todos').then(function(data) {
+    knex.select('todos.todo').from('todos').table('todos').then(function(data) {
+        res.json(data)
+    })
+})
+
+
+// Post 
+app.post('/todos', function(req, res) {
+    knex('todos').insert({todo: req.body.todo}).then(function(data) {
         res.json(data)
     })
 })
